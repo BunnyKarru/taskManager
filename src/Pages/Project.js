@@ -1,13 +1,8 @@
-import React, { useState } from 'react';
-import { addProject} from '../store/ProjectSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import AddProject from '../Components/AddProject';
-import ShowProjects from '../Components/ShowProjects';
-import Calendar from 'react-calendar';
+import React from 'react'
+import AddProject from '../Components/AddProject'
+import ShowProjects from '../Components/ShowProjects'
 
-const Project = () => {
-
-
+function Project() {
   return (
     <div className="flex justify-center  h-screen flex-grow bg-gray-500 p-3">
     <div className="flex flex-col items-center flex-grow">
@@ -16,10 +11,10 @@ const Project = () => {
       <div class="border border-gray-900 w-full"></div>
 
       <ShowProjects />
-      <Calendar/>
+      
     </div>
   </div>
-  );
-};
+  )
+}
 
-export default Project;
+export default Project

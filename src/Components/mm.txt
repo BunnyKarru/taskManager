@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment'; // or use any date library you prefer
+import moment from 'moment'; 
 
 function Calendar() {
   const [currentDate, setCurrentDate] = useState(moment());
   const [clickedDates, setClickedDates] = useState([]);
   const [holidayDates, setHolidayDates] = useState([]);
+
 
   // Add Saturdays and Sundays as default holidays when component mounts
   useEffect(() => {
@@ -27,7 +28,9 @@ function Calendar() {
   const addHoliday = () => {
     // Add clicked dates to holidayDates state
     setHolidayDates([...holidayDates, ...clickedDates]);
-    setClickedDates([]); // Clear clicked dates after adding them as holidays
+    setClickedDates([]);
+   
+    
   };
 
   const handleClick = (event, date) => {
@@ -44,13 +47,15 @@ function Calendar() {
     return (
       <div className="flex justify-between items-center mb-4">
         <button onClick={prevMonth} className="px-4 py-2 bg-gray-200 rounded-md text-gray-800 hover:bg-gray-300 focus:outline-none">
-          Previous
+          Previous Month
         </button>
         <h2 className="text-xl font-bold">{currentDate.format('MMMM YYYY')}</h2>
         <button onClick={nextMonth} className="px-4 py-2 bg-gray-200 rounded-md text-gray-800 hover:bg-gray-300 focus:outline-none">
-          Next
+          Next Month
         </button>
-        
+        <button onClick={addHoliday} className="px-4 py-2 bg-gray-200 rounded-md text-gray-800 hover:bg-gray-300 focus:outline-none">
+          Add Holiday
+        </button>
       </div>
     );
   };
@@ -60,37 +65,35 @@ function Calendar() {
     const startDate = currentDate.clone().startOf('month').startOf('week');
     const endDate = currentDate.clone().endOf('month').endOf('week');
     const today = moment();
-  
+
     let day = startDate;
-  
+
     while (day.isSameOrBefore(endDate, 'day')) {
       const date = day.clone();
       const isClicked = clickedDates.includes(date.format('YYYY-MM-DD'));
       const isHoliday = holidayDates.includes(date.format('YYYY-MM-DD'));
       const isToday = date.isSame(today, 'day');
-  
+
       let textColorClass = '';
       if (isToday) {
-        textColorClass ='text-blue-500'
-        // Red color for holidays
-      } else if (isHoliday) {
-        textColorClass = 'text-red-500'; // Yellow color for today's date
+        textColorClass = 'text-yellow-500'; // Yellow color for today's date
       } else {
         textColorClass = 'text-gray-800'; // Default color for other dates
       }
-  
+
       days.push(
         <div
           key={day.format('YYYY-MM-DD')}
           onClick={(event) => handleClick(event, date)}
-          className={`day text-center py-2 cursor-pointer ${textColorClass} ${isClicked ? 'bg-gray-300' : ''}`}
+          className={`day text-center py-2 cursor-pointer ${textColorClass} ${isHoliday ? 'bg-red-500 font-bold' : ''
+          } ${isClicked ? 'bg-gray-300' : ''}`}
         >
           {day.format('D')}
         </div>
       );
       day.add(1, 'day');
     }
-  
+
     return days;
   };
   
@@ -104,23 +107,15 @@ function Calendar() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen flex-grow bg-gray-400">
-  <div className="max-w-md mx-auto p-7 bg-white shadow-lg shadow-black h-fit">
-    {renderHeader()}
-    <div className="grid grid-cols-7 gap-2">
-      {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-        <div key={day} className="text-center font-bold">{day}</div>
-      ))}
-      {renderDays()}
+    <div className="max-w-md mx-auto">
+      {renderHeader()}
+      <div className="grid grid-cols-7 gap-2">
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+          <div key={day} className="text-center font-bold">{day}</div>
+        ))}
+        {renderDays()}
+      </div>
     </div>
-    <div className='text-center'>
-      <button onClick={addHoliday} className="px-4 py-2 bg-gray-200 rounded-md text-gray-800 hover:bg-gray-300 focus:outline-none">
-        Add Holiday
-      </button>
-    </div>
-  </div>
-</div>
-
   );
 }
 

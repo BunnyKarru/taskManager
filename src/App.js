@@ -1,18 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import Sidebar from './Components/Sidebar';
-import Project from './Pages/Project';
-import Calendar from 'react-calendar';
-import { useState } from 'react';
-import 'react-calendar/dist/Calendar.css';
-import Calender from './Components/Calender';
+
+
+import { Outlet } from "react-router-dom";
 
 function App() {
 
   return (
    <div className='flex'>
     <Sidebar/>
-   <Calender/>
+    <Outlet/>
+   
    </div>
   );
 }

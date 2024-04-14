@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import 'react-calendar/dist/Calendar.css';
-import Calender from './Calender';
+
 const Sidebar = () => {
   
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -19,7 +19,10 @@ const Sidebar = () => {
       
       <div id="sidebar" className={`sidebar bg-gray-600 w-64 min-h-screen p-6 ${sidebarOpen ? '' : 'hidden'} md:block`}>
         <div className="section mb-6">
-          <div className="section-title text-xl font-bold mb-2">Projects</div>
+        <Link to={'/'}>
+        <div className="section-title text-xl font-bold mb-2">Projects</div>
+      </Link>
+          
           {
             projects.map((project)=>(
               <div className="project bg-gray-300 p-2 rounded mb-2 overflow-hidden">{project.projectName}</div>
@@ -29,11 +32,20 @@ const Sidebar = () => {
           
         </div>
         <div className="section mb-6">
-          <div className="section-title text-xl font-bold mb-2">Task Sheet</div>
+        <Link to={'/tasksheet'}>
+
+        <div className="section-title text-xl font-bold mb-2">Task Sheet</div>
+
+        </Link>
+          
           
         </div>
         <div className="section">
-          <div className="section-title text-xl font-bold mb-2">Calendar</div>
+        <Link to={'/calender'}>
+        <div className="section-title text-xl font-bold mb-2">Calendar</div>
+
+        </Link>
+         
           
         </div>
       </div>
