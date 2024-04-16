@@ -1,8 +1,13 @@
 import React from 'react'
+import AddHours from './AddHours'
+import Calendar from './Calender'
 
 function TaskSheet() {
   return (
-    <div>TaskSheet</div>
+    <div>
+      <Calendar/>
+    <AddHours/>
+    </div>
   )
 }
 

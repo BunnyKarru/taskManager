@@ -1,36 +1,41 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
 const initialState = {
-    projects : [
-       { id : "1",
-       projectName : 'sample',}
-    ],
-    
-
+  projects: [
+    { id: "1", projectName: "Sample", workHours: 0 },
+  ],
 };
 
 export const ProjectSlice = createSlice({
+  name: "projectManager",
+  initialState,
+  reducers: {
+    addProject: (state, action) => {
+      const project = {
+        id: nanoid(), // Consider alternative unique identifier strategy
+        projectName: action.payload,
+        
+      };
+      state.projects.push(project);
+    },
+    removeProject: (state, action) => {
+      state.projects = state.projects.filter(
+        (project) => project.id !== action.payload
+      );
+    },
+    addHours: (state, action) => {
+      const { projectId, hours } = action.payload; // Destructure payload
+      const projectIndex = state.projects.findIndex(
+        (project) => project.id === projectId
+      );
 
-    name : 'projectManager',
-    initialState,
-    reducers :{
-        addProject : (state,action)=>{
+      // Check if project exists before updating
+      if (projectIndex !== -1) {
+        state.projects[projectIndex].workHours += hours;
+      }
+    },
+  },
+});
 
-            const project ={
-                id : nanoid(),
-                projectName:action.payload
-            }
-            state.projects.push(project)
-            
-        },
-        removeProject :(state,action)=>{
-            state.projects = state.projects.filter((project)=>project.id !== action.payload)
-        },
-    }
-
-
-
-})
-
-export const{addProject,removeProject}=ProjectSlice.actions;
+export const { addProject, removeProject ,addHours } = ProjectSlice.actions;
 export default ProjectSlice.reducer;
